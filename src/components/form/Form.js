@@ -1,27 +1,36 @@
 import React, { Component } from "react";
 import { addCourseActionCreator } from "../../redux/courses/actions";
 import { connect } from "react-redux";
+import axios from "axios";
 
 const initialState = { courseName: "", number: "" };
 
 class Form extends Component {
-  state = {...initialState};
+  state = { ...initialState };
 
   onHandleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
 
-  onHandleSubmit = (e) => {
+  onHandleSubmit = async (e) => {
     e.preventDefault();
-    this.props.addCourseActionCreator(this.state);
-    this.setState({...initialState})
+    const response = await axios.post(
+      "https://myproject-d33c4-default-rtdb.firebaseio.com/courses.json",
+      this.state
+    );
+    this.props.addCourseActionCreator({
+      ...this.state,
+      id: response.data.name,
+    });
+    this.setState({ ...initialState });
   };
   render() {
     const { courseName, number } = this.state;
 
     return (
       <form onSubmit={this.onHandleSubmit}>
+        <h2>{this.props.message}</h2>
         <label>
           Course
           <input
@@ -46,8 +55,12 @@ class Form extends Component {
   }
 }
 
-const mapDispatchToProps = {
-  addCourseActionCreator,
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addCourseActionCreator: (course) => {
+      dispatch(addCourseActionCreator(course));
+    },
+  };
 };
 
 export default connect(null, mapDispatchToProps)(Form);

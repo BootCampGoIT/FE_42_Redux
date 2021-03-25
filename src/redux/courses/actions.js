@@ -1,9 +1,15 @@
 import { v4 as uuidv4 } from "uuid";
 
+const getCourseActionCreator = (courses) => {
+  return {
+    type: "courses/getCourses",
+    payload: courses,
+  };
+};
 const addCourseActionCreator = (course) => {
   return {
     type: "courses/addCourse",
-    payload: { ...course, id: uuidv4() },
+    payload: { ...course },
   };
 };
 
@@ -25,4 +31,5 @@ export {
   addCourseActionCreator,
   deleteCourseActionCreator,
   setFilterActionCreator,
+  getCourseActionCreator,
 };
