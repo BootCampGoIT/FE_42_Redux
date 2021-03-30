@@ -1,4 +1,6 @@
 import { LOGOUT, SIGNIN, SIGNUP } from "./authConstants";
+import { createReducer } from "@reduxjs/toolkit";
+import { logout, signIn, signUp } from "./authActions";
 
 const initialState = {
   email: "",
@@ -9,18 +11,24 @@ const initialState = {
   refreshToken: "",
 };
 
-const authReducer = (state = initialState, { type, payload }) => {
-  switch (type) {
-    case SIGNUP:
-    case SIGNIN:
-      return { ...state, ...payload };
+const authReducer = createReducer(initialState, {
+  [signUp]: (state, { payload }) => ({ ...state, ...payload }),
+  [signIn]: (state, { payload }) => ({ ...state, ...payload }),
+  [logout]: (_) => ({ ...initialState }),
+});
 
-    case LOGOUT:
-      return { ...initialState };
+// const authReducer = (state = initialState, { type, payload }) => {
+//   switch (type) {
+//     case SIGNUP:
+//     case SIGNIN:
+//       return { ...state, ...payload };
 
-    default:
-      return state;
-  }
-};
+//     case LOGOUT:
+//       return { ...initialState };
+
+//     default:
+//       return state;
+//   }
+// };
 
 export default authReducer;
