@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { deleteCourseActionCreator } from "../../redux/courses/actions";
+import { deleteCourse } from "../../redux/courses/reducer";
 
-const List = ({ courses, deleteCourseActionCreator }) => {
+const List = ({ courses, deleteCourse }) => {
   const handleDelete = (e) => {
     const id = e.target.dataset.id;
-    deleteCourseActionCreator(id);
+    deleteCourse(id);
   };
 
   return (
@@ -32,7 +32,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  deleteCourseActionCreator,
+  deleteCourse,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(List);

@@ -1,15 +1,16 @@
 import React from "react";
 import {connect} from 'react-redux';
-import { setFilterActionCreator } from "../../redux/courses/actions";
+import { setFilter } from "../../redux/courses/reducer";
 
-const Filter = ({ filter, setFilterActionCreator }) => {
+
+const Filter = ({ filter, setFilter }) => {
   return (
     <label>
       Filter
       <input
         type='text'
         value={filter}
-        onChange={(e) => setFilterActionCreator(e.target.value)}
+        onChange={(e) => setFilter(e.target.value)}
       />
     </label>
   );
@@ -22,7 +23,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps =  {
-    setFilterActionCreator
+    setFilter
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { addCourseActionCreator } from "../../redux/courses/actions";
+// import { addCourseActionCreator } from "../../redux/courses/actions";
 import { connect } from "react-redux";
 import axios from "axios";
+import { addCourse } from "../../redux/courses/reducer";
 
 const initialState = { courseName: "", number: "" };
 
@@ -19,7 +20,7 @@ class Form extends Component {
       "https://myproject-d33c4-default-rtdb.firebaseio.com/courses.json",
       this.state
     );
-    this.props.addCourseActionCreator({
+    this.props.addCourse({
       ...this.state,
       id: response.data.name,
     });
@@ -57,8 +58,8 @@ class Form extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addCourseActionCreator: (course) => {
-      dispatch(addCourseActionCreator(course));
+    addCourse: (course) => {
+      dispatch(addCourse(course));
     },
   };
 };

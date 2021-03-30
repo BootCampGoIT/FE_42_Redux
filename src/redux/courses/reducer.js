@@ -29,7 +29,6 @@ const coursesReducer = combineReducers({
   filter: filterSlice.reducer,
 });
 
-
 export { coursesReducer };
 
 // const filterReducer = (state = "", action) => {

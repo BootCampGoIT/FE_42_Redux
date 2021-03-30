@@ -5,8 +5,9 @@ import { connect } from "react-redux";
 import { logout } from "../redux/auth/authActions";
 import axios from "axios";
 import { getCourseActionCreator } from "../redux/courses/actions";
+import Header from "./header/Header";
 
-const App = ({ isAuth, logout, getCourseActionCreator }) => {
+const App = ({  getCourseActionCreator }) => {
   useEffect(() => {
     axios
       .get("https://myproject-d33c4-default-rtdb.firebaseio.com/courses.json")
@@ -18,40 +19,8 @@ const App = ({ isAuth, logout, getCourseActionCreator }) => {
   }, []);
   return (
     <div>
-      <ul className='navigationList'>
-        {mainRoutes.map(({ name, path, exact, restricted }) => {
-          return (
-            <>
-              {isAuth && !restricted && (
-                <li key={path}>
-                  <NavLink to={path} exact={exact}>
-                    {name}
-                  </NavLink>
-                </li>
-              )}
-              {!isAuth && restricted && (
-                <li key={path}>
-                  <NavLink to={path} exact={exact}>
-                    {name}
-                  </NavLink>
-                </li>
-              )}
-              {!isAuth && !restricted && (
-                <li key={path}>
-                  <NavLink to={path} exact={exact}>
-                    {name}
-                  </NavLink>
-                </li>
-              )}
-            </>
-          );
-        })}
-        {isAuth && (
-          <button type='button' onClick={logout}>
-            Logout
-          </button>
-        )}
-      </ul>
+      <Header />
+
       <Switch>
         {mainRoutes.map(({ path, exact, component }) => (
           <Route path={path} exact={exact} key={path} component={component} />
@@ -61,10 +30,4 @@ const App = ({ isAuth, logout, getCourseActionCreator }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    isAuth: state.auth.idToken,
-  };
-};
-
-export default connect(mapStateToProps, { logout, getCourseActionCreator })(App);
+export default connect(null, {  getCourseActionCreator })(App);
