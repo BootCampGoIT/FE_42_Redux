@@ -42,6 +42,8 @@ export { coursesReducer };
 //   }
 // };
 
+
+
 // const courseItemsReducer = (state = [], action) => {
 //   switch (action.type) {
 //     case "courses/getCourses":
