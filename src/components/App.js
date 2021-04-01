@@ -4,19 +4,15 @@ import { NavLink, Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../redux/auth/authActions";
 import axios from "axios";
-import { getCourseActionCreator } from "../redux/courses/actions";
+// import { getCourseActionCreator } from "../redux/courses/actions";
 import Header from "./header/Header";
+import { getCoursesOperation } from "../redux/courses/operation";
 
-const App = ({  getCourseActionCreator }) => {
+const App = ({ getCoursesOperation }) => {
   useEffect(() => {
-    axios
-      .get("https://myproject-d33c4-default-rtdb.firebaseio.com/courses.json")
-      .then(({ data }) =>
-        getCourseActionCreator(
-          Object.keys(data).map((key) => ({ id: key, ...data[key] }))
-        )
-      );
+    getCoursesOperation();
   }, []);
+
   return (
     <div>
       <Header />
@@ -30,4 +26,4 @@ const App = ({  getCourseActionCreator }) => {
   );
 };
 
-export default connect(null, {  getCourseActionCreator })(App);
+export default connect(null, { getCoursesOperation })(App);

@@ -21,12 +21,32 @@ const filterSlice = createSlice({
   },
 });
 
+const loaderSlice = createSlice({
+  name: "loader",
+  initialState: false,
+  reducers: {
+    setLoader: (state) => !state,
+  },
+});
+const errorSlice = createSlice({
+  name: "error",
+  initialState: "",
+  reducers: {
+    setError: (_, { payload }) => payload,
+    resetError: () => "",
+  },
+});
+
 export const { getCourse, addCourse, deleteCourse } = courseItemsSlice.actions;
 export const { setFilter } = filterSlice.actions;
+export const { setLoader } = loaderSlice.actions;
+export const { setError, resetError } = errorSlice.actions;
 
 const coursesReducer = combineReducers({
   courseItems: courseItemsSlice.reducer,
   filter: filterSlice.reducer,
+  loader: loaderSlice.reducer,
+  error: errorSlice.reducer,
 });
 
 export { coursesReducer };
@@ -40,8 +60,6 @@ export { coursesReducer };
 //       return state;
 //   }
 // };
-
-
 
 // const courseItemsReducer = (state = [], action) => {
 //   switch (action.type) {

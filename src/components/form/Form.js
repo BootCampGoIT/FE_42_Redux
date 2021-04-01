@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
 import { addCourse } from "../../redux/courses/reducer";
+import { addCourseOperation } from "../../redux/courses/operation";
 
 const initialState = { courseName: "", number: "" };
 
@@ -16,14 +17,7 @@ class Form extends Component {
 
   onHandleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post(
-      "https://myproject-d33c4-default-rtdb.firebaseio.com/courses.json",
-      this.state
-    );
-    this.props.addCourse({
-      ...this.state,
-      id: response.data.name,
-    });
+    this.props.addCourseOperation(this.state)
     this.setState({ ...initialState });
   };
   render() {
@@ -58,9 +52,9 @@ class Form extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addCourse: (course) => {
-      dispatch(addCourse(course));
-    },
+    addCourseOperation: (course) => {
+      dispatch(addCourseOperation(course));
+    }
   };
 };
 
