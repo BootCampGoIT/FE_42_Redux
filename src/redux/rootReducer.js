@@ -1,8 +1,9 @@
 import { combineReducers } from "redux";
 import authReducer from "./auth/authReducer";
-import { coursesReducer } from "./courses/reducer";
+
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { productsReducer } from "./courses/reducer";
 
 const persistConfig = {
   key: "tokens",
@@ -12,7 +13,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  courses: coursesReducer,
+  products: productsReducer,
   auth: persistReducer(persistConfig, authReducer),
 });
 

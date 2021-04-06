@@ -1,29 +1,21 @@
 import React from "react";
-import {connect} from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import { setFilter } from "../../redux/courses/reducer";
+import { getFilterValue } from "../../redux/courses/selectors";
 
-
-const Filter = ({ filter, setFilter }) => {
+const Filter = () => {
+  const filter = useSelector(getFilterValue);
+  const dispatch = useDispatch();
   return (
     <label>
       Filter
       <input
         type='text'
         value={filter}
-        onChange={(e) => setFilter(e.target.value)}
+        onChange={(e) => dispatch(setFilter(e.target.value))}
       />
     </label>
   );
 };
 
-const mapStateToProps = (state) => {
-    return {
-        filter: state.courses.filter
-    }
-}
-
-const mapDispatchToProps =  {
-    setFilter
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Filter);
+export default Filter;

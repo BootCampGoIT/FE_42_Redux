@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import { createSlice } from "@reduxjs/toolkit";
 
-const courseItemsSlice = createSlice({
+const productsItemsSlice = createSlice({
   name: "courseItems",
   initialState: [],
   reducers: {
@@ -28,6 +28,7 @@ const loaderSlice = createSlice({
     setLoader: (state) => !state,
   },
 });
+
 const errorSlice = createSlice({
   name: "error",
   initialState: "",
@@ -37,41 +38,30 @@ const errorSlice = createSlice({
   },
 });
 
-export const { getCourse, addCourse, deleteCourse } = courseItemsSlice.actions;
+const togglerSlice = createSlice({
+  name: "toggler",
+  initialState: false,
+  reducers: {
+    toggler: (state) => !state,
+  },
+});
+
+export const {
+  getCourse,
+  addCourse,
+  deleteCourse,
+} = productsItemsSlice.actions;
 export const { setFilter } = filterSlice.actions;
 export const { setLoader } = loaderSlice.actions;
 export const { setError, resetError } = errorSlice.actions;
+export const { toggler } = togglerSlice.actions;
 
-const coursesReducer = combineReducers({
-  courseItems: courseItemsSlice.reducer,
+const productsReducer = combineReducers({
+  productItems: productsItemsSlice.reducer,
   filter: filterSlice.reducer,
   loader: loaderSlice.reducer,
   error: errorSlice.reducer,
+  toggler: togglerSlice.reducer,
 });
 
-export { coursesReducer };
-
-// const filterReducer = (state = "", action) => {
-//   switch (action.type) {
-//     case "courses/setFilter":
-//       return action.payload;
-
-//     default:
-//       return state;
-//   }
-// };
-
-// const courseItemsReducer = (state = [], action) => {
-//   switch (action.type) {
-//     case "courses/getCourses":
-//       return action.payload;
-//     case "courses/addCourse":
-//       return [...state, action.payload];
-
-//     case "courses/deleteCourse":
-//       return [...state.filter((item) => item.id !== action.payload)];
-
-//     default:
-//       return state;
-//   }
-// };
+export { productsReducer };

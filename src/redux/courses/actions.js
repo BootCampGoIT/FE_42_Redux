@@ -26,10 +26,23 @@ const setFilterActionCreator = (value) => {
     payload: value,
   };
 };
+const toggleValue = () => {
+  return {
+    type: "toggleValue",
+  };
+};
+
+const setFilterActionCreator = (value) => {
+  return {
+    type: "courses/setFilter",
+    payload: value,
+  };
+};
 
 export {
   addCourseActionCreator,
   deleteCourseActionCreator,
   setFilterActionCreator,
   getCourseActionCreator,
+  toggleValue,
 };

@@ -1,29 +1,38 @@
 import React, { useEffect } from "react";
-import { mainRoutes } from "../routes/mainRoutes";
-import { NavLink, Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import { logout } from "../redux/auth/authActions";
-import axios from "axios";
-// import { getCourseActionCreator } from "../redux/courses/actions";
 import Header from "./header/Header";
 import { getCoursesOperation } from "../redux/courses/operation";
+import Main from "./main/Main";
 
 const App = ({ getCoursesOperation }) => {
   useEffect(() => {
     getCoursesOperation();
-  }, []);
+  }, [getCoursesOperation]);
 
   return (
     <div>
       <Header />
-
-      <Switch>
-        {mainRoutes.map(({ path, exact, component }) => (
-          <Route path={path} exact={exact} key={path} component={component} />
-        ))}
-      </Switch>
+      <Main />
     </div>
   );
 };
 
 export default connect(null, { getCoursesOperation })(App);
+
+// const contacts = [
+//   { name: "Alex", age: 23 },
+//   { name: "Alex1", age: 25 },
+//   { name: "Alex2", age: 27 },
+//   { name: "Alex3", age: 332 },
+//   ....
+//   ....
+//   { name: "Alex", age: 23 },
+//   { name: "Alex1", age: 25 },
+//   { name: "Alex2", age: 27 },
+//   { name: "Alex33", age: 35 },
+// ];
+
+// const getResult = () => {
+//   return contacts.find((item) => item.age === 35 && item.id === "sdfghjkhfdfdghmhgfd"); //{ name: "Alex33", age: 35 }
+// };
+// getResult()

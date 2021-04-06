@@ -1,61 +1,109 @@
-import React, { Component } from "react";
-// import { addCourseActionCreator } from "../../redux/courses/actions";
-import { connect } from "react-redux";
-import axios from "axios";
-import { addCourse } from "../../redux/courses/reducer";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { addCourseOperation } from "../../redux/courses/operation";
+import { isProductsLoading } from "../../redux/courses/selectors";
 
 const initialState = { courseName: "", number: "" };
 
-class Form extends Component {
-  state = { ...initialState };
+const Form = () => {
+  const [state, setState] = useState(initialState);
+  const loading = useSelector(isProductsLoading);
+  const dispatch = useDispatch();
 
-  onHandleChange = (e) => {
+  const onHandleChange = (e) => {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    setState((prev) => ({ ...prev, [name]: value }));
   };
-
-  onHandleSubmit = async (e) => {
+  const onHandleSubmit = async (e) => {
     e.preventDefault();
-    this.props.addCourseOperation(this.state)
-    this.setState({ ...initialState });
+    dispatch(addCourseOperation(state));
+    setState({ ...initialState });
   };
-  render() {
-    const { courseName, number } = this.state;
 
-    return (
-      <form onSubmit={this.onHandleSubmit}>
-        <h2>{this.props.message}</h2>
-        <label>
-          Course
-          <input
-            name='courseName'
-            type='text'
-            value={courseName}
-            onChange={this.onHandleChange}
-          />
-        </label>
-        <label>
-          Number
-          <input
-            name='number'
-            type='text'
-            value={number}
-            onChange={this.onHandleChange}
-          />
-        </label>
-        <button type='submit'>Save</button>
-      </form>
-    );
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addCourseOperation: (course) => {
-      dispatch(addCourseOperation(course));
-    }
-  };
+  return (
+    <form onSubmit={onHandleSubmit}>
+      <label>
+        Course
+        <input
+          name='courseName'
+          type='text'
+          value={state.courseName}
+          onChange={onHandleChange}
+        />
+      </label>
+      <label>
+        Number
+        <input
+          name='number'
+          type='text'
+          value={state.number}
+          onChange={onHandleChange}
+        />
+      </label>
+      <button type='submit'>Save</button>
+    </form>
+  );
 };
 
-export default connect(null, mapDispatchToProps)(Form);
+export default Form;
+
+// Example2
+// const initialState = { courseName: "", number: "" };
+
+// const Form = ({ addCourseOperation }) => {
+//   // const [state, setState] = useState(initialState);
+//   const [courseName, setCourseName] = useState("");
+//   const [number, setNumber] = useState("");
+
+//   // const onHandleChange = (e) => {
+//   //   const { name, value } = e.target;
+//   //   setState((prev) => ({ ...prev, [name]: value }));
+//   // };
+//   const onHandleSubmit = async (e) => {
+//     e.preventDefault();
+//     addCourseOperation({ courseName, number });
+//     setCourseName("");
+//     setNumber("");
+//     // setState({ ...initialState });
+//   };
+
+//   return (
+//     <form onSubmit={onHandleSubmit}>
+//       <label>
+//         Course
+//         <input
+//           name='courseName'
+//           type='text'
+//           value={courseName}
+//           onChange={(e) => setCourseName(e.target.value)}
+//         />
+//       </label>
+//       <label>
+//         Number
+//         <input
+//           name='number'
+//           type='text'
+//           value={number}
+//           onChange={(e) => setNumber(e.target.value)}
+//         />
+//       </label>
+//       <button type='submit'>Save</button>
+//     </form>
+//   );
+// };
+
+// const mapStateToProps = (state) => {
+//   return {
+//     products: state.products.productList,
+//   };
+// };
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     addCourseOperation: (course) => {
+//       dispatch(addCourseOperation(course));
+//     },
+//   };
+// };
+
+// export default connect(mapStateToProps, mapDispatchToProps)(Form);

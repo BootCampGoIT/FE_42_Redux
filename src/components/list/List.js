@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
-import { connect, useDispatch } from "react-redux";
-import { deleteCourse, resetError } from "../../redux/courses/reducer";
+import { useSelector, useDispatch } from "react-redux";
+import { resetError } from "../../redux/courses/reducer";
+import { getError, getProducts } from "../../redux/courses/selectors";
+import ListItem from "./listItem/ListItem";
 
-const List = ({ courses, deleteCourse, error }) => {
+const List = () => {
   const dispatch = useDispatch();
-  const handleDelete = (e) => {
-    const id = e.target.dataset.id;
-    deleteCourse(id);
-  };
+  const courses = useSelector((state) => getProducts(state));
+  const error = useSelector(getError);
 
   useEffect(() => {
     setTimeout(() => {
@@ -21,14 +21,8 @@ const List = ({ courses, deleteCourse, error }) => {
         <h2>{error}</h2>
       ) : (
         <ul>
-          {courses.map(({ courseName, number, id }) => (
-            <li key={id}>
-              <p>{courseName}</p>
-              <p>{number}</p>
-              <button data-id={id} onClick={handleDelete}>
-                Delete
-              </button>
-            </li>
+          {courses.map(({ id }) => (
+            <ListItem id={id} key={id} />
           ))}
         </ul>
       )}
@@ -36,17 +30,4 @@ const List = ({ courses, deleteCourse, error }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    courses: state.courses.courseItems.filter((item) =>
-      item.courseName.toLowerCase().includes(state.courses.filter.toLowerCase())
-    ),
-    error: state.courses.error,
-  };
-};
-
-const mapDispatchToProps = {
-  deleteCourse,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default List;
