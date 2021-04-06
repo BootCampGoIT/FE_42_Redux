@@ -1,5 +1,4 @@
 import axios from "axios";
-import { getCourseActionCreator } from "./actions";
 import { addCourse, setLoader, setError, getCourse } from "./reducer";
 
 const addCourseOperation = (course) => async (dispatch) => {
@@ -43,14 +42,3 @@ const getCoursesOperation = () => async (dispatch) => {
 
 export { addCourseOperation, getCoursesOperation };
 
-// function create() {
-//   return function () {
-//     console.log("Hello");
-//   };
-// }
-
-// const create = () => () => {
-//     console.log("Hello");
-// }
-
-// create()();
