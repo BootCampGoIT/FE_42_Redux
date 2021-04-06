@@ -6,7 +6,7 @@ const addCourseOperation = (course) => async (dispatch) => {
   dispatch(setLoader());
   try {
     const response = await axios.post(
-      "https://shop-9ebcf-default-rtdb.firebaseio.com/courses.json",
+      "https://fe42-4b3ae-default-rtdb.firebaseio.com/courses.json",
       course
     );
     dispatch(addCourse({ ...course, id: response.data.name }));
@@ -24,7 +24,7 @@ const getCoursesOperation = () => async (dispatch) => {
   dispatch(setLoader());
   try {
     const response = await axios.get(
-      "https://shop-9ebcf-default-rtdb.firebaseio.com/courses.json"
+      "https://fe42-4b3ae-default-rtdb.firebaseio.com/courses.json"
     );
     dispatch(
       getCourse(

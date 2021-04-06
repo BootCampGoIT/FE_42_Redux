@@ -18,14 +18,14 @@ class AuthForm extends Component {
     if (this.props.location.pathname === "/signup") {
       axios
         .post(
-          `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAP4-f2MyG2f06x2CJ_pJqqYXNvRXJOTKM`,
+          `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBQubl0eTiAiPvS2UWFPYwi9wH9VFJrYrM`,
           { ...this.state, returnSecureToken: true }
         )
         .then(({ data }) => this.props.signUp(data));
     } else
       axios
         .post(
-          `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAP4-f2MyG2f06x2CJ_pJqqYXNvRXJOTKM`,
+          `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBQubl0eTiAiPvS2UWFPYwi9wH9VFJrYrM`,
           { ...this.state, returnSecureToken: true }
         )
         .then(({ data }) => this.props.signIn(data));
