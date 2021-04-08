@@ -1,35 +1,37 @@
-import AuthForm from "../components/auth/AuthForm";
-import CoursesPage from "../pages/CoursesPage";
-import HomePage from "../pages/HomePage";
+import { lazy } from "react";
 
 const mainRoutes = [
   {
     name: "Home",
     path: "/",
     exact: true,
-    component: HomePage,
+    component: lazy(() => import("../pages/HomePage")),
     restricted: false,
+    isPrivate: false,
   },
   {
-    name: "Courses",
-    path: "/courses",
+    name: "Products",
+    path: "/products",
     exact: true,
-    component: CoursesPage,
+    component: lazy(() => import("../pages/ProductsPage")),
     restricted: false,
+    isPrivate: true,
   },
   {
     name: "Sign Up",
     path: "/signup",
     exact: true,
-    component: AuthForm,
+    component: lazy(() => import("../pages/AuthPage")),
     restricted: true,
+    isPrivate: false,
   },
   {
     name: "Sign In",
     path: "/signin",
     exact: true,
-    component: AuthForm,
+    component: lazy(() => import("../pages/AuthPage")),
     restricted: true,
+    isPrivate: false,
   },
 ];
 

@@ -3,7 +3,7 @@ import authReducer from "./auth/authReducer";
 
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { productsReducer } from "./courses/reducer";
+import { productsReducer } from "./products/reducer";
 
 const persistConfig = {
   key: "tokens",

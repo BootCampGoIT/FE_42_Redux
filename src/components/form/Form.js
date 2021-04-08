@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addCourseOperation } from "../../redux/courses/operation";
-import { isProductsLoading } from "../../redux/courses/selectors";
+import { addCourseOperation } from "../../redux/products/operation";
+import { isProductsLoading } from "../../redux/products/selectors";
+import { FormContainer } from "./FormStyled";
 
-const initialState = { courseName: "", number: "" };
+const initialState = { productName: "", price: "" };
 
 const Form = () => {
   const [state, setState] = useState(initialState);
@@ -21,27 +22,31 @@ const Form = () => {
   };
 
   return (
-    <form onSubmit={onHandleSubmit}>
-      <label>
-        Course
+    <FormContainer onSubmit={onHandleSubmit}>
+      <label className='formLabel'>
+        Product
         <input
-          name='courseName'
+          name='productName'
           type='text'
-          value={state.courseName}
+          value={state.productName}
           onChange={onHandleChange}
+          className='formInput'
         />
       </label>
-      <label>
-        Number
+      <label className='formLabel'>
+        Price
         <input
-          name='number'
+          name='price'
           type='text'
-          value={state.number}
+          value={state.price}
           onChange={onHandleChange}
+          className='formInput'
         />
       </label>
-      <button type='submit'>Save</button>
-    </form>
+      <button type='submit' className='formButton'>
+        Save
+      </button>
+    </FormContainer>
   );
 };
 

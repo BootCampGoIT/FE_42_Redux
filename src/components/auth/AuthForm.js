@@ -1,82 +1,68 @@
-import axios from "axios";
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { signUp, signIn } from "../../redux/auth/authActions";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signUpOperation,
+  signInOperation,
+} from "../../redux/auth/authOperation.js";
+import { useLocation } from "react-router-dom";
+import { AuthContainer } from "./AuthFormStyled.js";
 
 const initialState = { email: "", password: "" };
 
-class AuthForm extends Component {
-  state = { ...initialState };
+const AuthForm = () => {
+  const [state, setState] = useState(initialState);
+  const error = useSelector((state) => state.auth.error);
+  const location = useLocation();
+  const dispatch = useDispatch();
 
-  onHandleChange = (e) => {
+  // useEffect(() => {
+
+  // }, [error]);
+
+  const onHandleChange = (e) => {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    setState((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  onHandleSubmit = (e) => {
+  const onHandleSubmit = (e) => {
     e.preventDefault();
-    if (this.props.location.pathname === "/signup") {
-      axios
-        .post(
-          `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBQubl0eTiAiPvS2UWFPYwi9wH9VFJrYrM`,
-          { ...this.state, returnSecureToken: true }
-        )
-        .then(({ data }) => this.props.signUp(data));
-    } else
-      axios
-        .post(
-          `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBQubl0eTiAiPvS2UWFPYwi9wH9VFJrYrM`,
-          { ...this.state, returnSecureToken: true }
-        )
-        .then(({ data }) => this.props.signIn(data));
-
-    this.setState({ ...initialState });
+    if (location.pathname === "/signup") {
+      dispatch(signUpOperation(state));
+    } else {
+      dispatch(signInOperation(state));
+    }
   };
-  render() {
-    const { email, password } = this.state;
 
-    return (
-      <form onSubmit={this.onHandleSubmit}>
-        <label>
+  return (
+    <>
+      <h3>{error}</h3>
+      <AuthContainer onSubmit={onHandleSubmit}>
+        <label className='formLabel'>
           Email
           <input
             name='email'
             type='text'
-            value={email}
-            onChange={this.onHandleChange}
+            value={state.email}
+            onChange={onHandleChange}
+            className='formInput'
           />
         </label>
-        <label>
+        <label className='formLabel'>
           Password
           <input
             name='password'
             type='text'
-            value={password}
-            onChange={this.onHandleChange}
+            value={state.password}
+            onChange={onHandleChange}
+            className='formInput'
           />
         </label>
-        <button type='submit'>
-          {this.props.location.pathname === "/signup" ? "Sign Up" : "Sign In"}
+        <button type='submit' className='formButton'>
+          {location.pathname === "/signup" ? "Sign Up" : "Sign In"}
         </button>
-      </form>
-    );
-  }
-}
+      </AuthContainer>
+    </>
+  );
+};
 
-// const mapDispatchToProps = (dispatch, ownProps) => {
-//   return {
-//     signUp: (payload) => dispatch({ type: SIGNUP, payload })
-//   };
-// };
-
-export default connect(null, { signUp, signIn })(AuthForm);
-
-// const getName = () => console.log("Hello");
-
-// const getDAta = getName
-// const name = "Alex";
-
-// const data = {
-//   name: name,
-//   getName: getName
-// };
+export default AuthForm;

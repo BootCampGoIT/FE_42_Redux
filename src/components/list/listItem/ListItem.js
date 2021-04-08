@@ -1,21 +1,25 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteCourse } from "../../../redux/courses/reducer";
-import { getProductItem } from "../../../redux/courses/selectors";
+import { deleteCourse } from "../../../redux/products/reducer";
+import { getProductItem } from "../../../redux/products/selectors";
+import { ListItemContainer } from "./ListItemStyled";
 
 const ListItem = ({ id }) => {
   const dispatch = useDispatch();
-  const { courseName, number } = useSelector((state) =>
+  const { productName, price } = useSelector((state) =>
     getProductItem(state, id)
   );
   return (
-    <li>
-      <p>{courseName}</p>
-      <p>{number}</p>
-      <button data-id={id} onClick={() => dispatch(deleteCourse(id))}>
+    <ListItemContainer>
+      <h2>{productName}</h2>
+      <p>Price: {price} $</p>
+      <button
+        data-id={id}
+        onClick={() => dispatch(deleteCourse(id))}
+        className='deleteButton'>
         Delete
       </button>
-    </li>
+    </ListItemContainer>
   );
 };
 

@@ -1,12 +1,17 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-
-const NavigationItem = ({ restricted, path, exact, name, isAuth }) => {
-
+const NavigationItem = ({
+  isPrivate,
+  restricted,
+  path,
+  exact,
+  name,
+  isAuth,
+}) => {
   return (
     <>
-      {isAuth && !restricted && (
+      {isAuth && !restricted && isPrivate && (
         <li key={path} className='navigationListItem'>
           <NavLink
             to={path}
@@ -17,7 +22,7 @@ const NavigationItem = ({ restricted, path, exact, name, isAuth }) => {
           </NavLink>
         </li>
       )}
-      {!isAuth && restricted && (
+      {!isAuth && !isPrivate && restricted && (
         <li key={path} className='navigationListItem'>
           <NavLink
             to={path}
@@ -28,7 +33,7 @@ const NavigationItem = ({ restricted, path, exact, name, isAuth }) => {
           </NavLink>
         </li>
       )}
-      {!isAuth && !restricted && (
+      {!isPrivate && !restricted && (
         <li key={path} className='navigationListItem'>
           <NavLink
             to={path}

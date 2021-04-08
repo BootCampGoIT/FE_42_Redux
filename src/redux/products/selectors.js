@@ -7,7 +7,7 @@ const getProducts = createSelector(
   [getAllProducts, getFilterValue],
   (products, filter) =>
     products.filter((item) =>
-      item.courseName.toLowerCase().includes(filter.toLowerCase())
+      item.productName.toLowerCase().includes(filter.toLowerCase())
     )
 );
 

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import Header from "./header/Header";
-import { getCoursesOperation } from "../redux/courses/operation";
+import { getCoursesOperation } from "../redux/products/operation";
 import Main from "./main/Main";
 
 const App = ({ getCoursesOperation }) => {
