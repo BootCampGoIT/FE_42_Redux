@@ -8,7 +8,7 @@ import { productsReducer } from "./products/reducer";
 const persistConfig = {
   key: "tokens",
   storage,
-  whitelist: ["refreshToken", "idToken"],
+  whitelist: ["refreshToken", "idToken", "email", "role"],
   // blacklist: ["kind"],
 };
 

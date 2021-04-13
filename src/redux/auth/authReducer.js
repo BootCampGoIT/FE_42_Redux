@@ -25,10 +25,8 @@ const authReducer = createReducer(initialState, {
 //     case SIGNUP:
 //     case SIGNIN:
 //       return { ...state, ...payload };
-
 //     case LOGOUT:
 //       return { ...initialState };
-
 //     default:
 //       return state;
 //   }

@@ -7,9 +7,19 @@ const signUpOperation = (user) => async (dispatch, getState) => {
       `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBQubl0eTiAiPvS2UWFPYwi9wH9VFJrYrM`,
       { ...user, returnSecureToken: true }
     );
-    dispatch(signUp(response.data));
+    await axios.post(
+      `https://fe42-4b3ae-default-rtdb.firebaseio.com/users/${response.data.localId}.json?auth=${response.data.idToken}`,
+      { ...user, role: "user" }
+    );
+    dispatch(
+      signUp({
+        role: "user",
+        email: response.data.email,
+        idToken: response.data.idToken,
+        refreshToken: response.data.refreshToken,
+      })
+    );
   } catch (error) {
-    
     dispatch(setError(error.response.data.error.message));
   }
 };
@@ -20,9 +30,22 @@ const signInOperation = (user) => async (dispatch, getState) => {
       `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBQubl0eTiAiPvS2UWFPYwi9wH9VFJrYrM`,
       { ...user, returnSecureToken: true }
     );
-    dispatch(signIn(response.data));
+    const getRole = await axios.get(
+      `https://fe42-4b3ae-default-rtdb.firebaseio.com/users/${response.data.localId}.json?auth=${response.data.idToken}`
+    );
+    console.log(
+      "response",
+      Object.keys(getRole.data).map((key) => getRole.data[key])[0].role
+    );
+    dispatch(
+      signIn({
+        email: response.data.email,
+        idToken: response.data.idToken,
+        refreshToken: response.data.refreshToken,
+        role: Object.keys(getRole.data).map((key) => getRole.data[key])[0].role,
+      })
+    );
   } catch (error) {
-
     dispatch(setError(error.response.data.error.message));
   }
 };
